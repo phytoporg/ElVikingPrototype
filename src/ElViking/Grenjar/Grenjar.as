@@ -20,6 +20,8 @@ package ElViking.Grenjar
 		private const SPRITE_HEIGHT:int = 25;
 		private const SPRITE_WIDTH:int  = 25;
 		
+		private const GRENJAR_SWING_DURATION:int = 15;
+		
 		//
 		// Tracks the direction Grenjar is currently facing
 		//
@@ -61,6 +63,7 @@ package ElViking.Grenjar
 			stateDictionary[GrenjarState.WALKING]  = new GrenjarStateWalking();
 			stateDictionary[GrenjarState.STANDING] = new GrenjarStateStanding();
 			stateDictionary[GrenjarState.BLOCKING] = new GrenjarStateBlocking();
+			stateDictionary[GrenjarState.SWINGING] = new GrenjarStateSwinging(GRENJAR_SWING_DURATION);
 			
 			_stateMachine = 
 				new StateMachine(

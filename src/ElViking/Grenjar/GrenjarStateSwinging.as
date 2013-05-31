@@ -2,39 +2,37 @@ package ElViking.Grenjar
 {
 	import EntityLib.State;
 	import EntityLib.StateMachine;
-	import org.flixel.FlxG;
-	
 	/**
-	 * State Grenjar is in when he is walking and not doing anything else.
+	 * The "Grenjar is swinging his hammer" state
 	 * 
 	 * @author Philjo
 	 */
-	
-	internal class GrenjarStateWalking extends State
-	{
+	public class GrenjarStateSwinging extends State
+	{	
 		private var _toStanding:Boolean;
-		private var _toBlocking:Boolean;
-		private var _toSwinging:Boolean;
 		
-		public function GrenjarStateWalking():void
+		//
+		// Duration is measured in ticks (update calls)
+		//
+		
+		private var _swingDuration:int;
+		public function get swingDuration():int
 		{
+			return _swingDuration;
+		}
+		
+		public function GrenjarStateSwinging(swingDuration:int)
+		{
+			_swingDuration = swingDuration;
 			_toStanding = false;
-			_toBlocking = false;
 		}
 		
 		override public function updateState(context:Object):void
 		{
 			_toStanding = false;
-			_toBlocking = false;
-			_toSwinging = false;
 			
 			var grenjar:Grenjar = context as Grenjar;
-			
-			if (FlxG.keys.Z == true)
-			{
-				_toBlocking = true;
-			}
-			else if ((grenjar.velocity.x == 0) && (grenjar.velocity.y == 0))
+			if (grenjar.stateMachine.currentStateDuration >= _swingDuration) 
 			{
 				_toStanding = true;
 			}
@@ -46,17 +44,11 @@ package ElViking.Grenjar
 			var stateMachine:StateMachine = grenjar.stateMachine;
 			
 			var returnState:State = stateMachine.currentState;
-			if (_toStanding == true) 
+			if (_toStanding == true)
 			{
 				returnState = stateMachine.getState(GrenjarState.STANDING);
 			}
-			else if (_toBlocking == true)
-			{
-				returnState = stateMachine.getState(GrenjarState.BLOCKING);
-				grenjar.velocity.x = 0;
-				grenjar.velocity.y = 0;
-			}
-			
+		
 			return returnState;
 		}
 	}

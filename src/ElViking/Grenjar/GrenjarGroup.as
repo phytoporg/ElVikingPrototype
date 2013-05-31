@@ -11,6 +11,7 @@ package ElViking.Grenjar
 	{
 		private var _body:Grenjar;
 		private var _shield:GrenjarShield;
+		private var _wepon:GrenjarHammer;
 		
 		public function GrenjarGroup()
 		{
@@ -24,6 +25,10 @@ package ElViking.Grenjar
 			_shield = new GrenjarShield(_body);
 			_shield.revive();
 			add(_shield);
+			
+			_wepon = new GrenjarHammer(_body);
+			_wepon.revive();
+			add(_wepon);
 		}
 		
 		override public function preUpdate():void

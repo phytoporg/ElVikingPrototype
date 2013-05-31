@@ -9,6 +9,16 @@ package EntityLib
 	 */
 	public class StateMachine 
 	{
+		//
+		// Duration measured in ticks (update calls).
+		//
+		
+		protected var _currentStateDuration:int;
+		public function get currentStateDuration():int
+		{
+			return _currentStateDuration;
+		}
+			
 		protected var _currentState:State;
 		public function get currentState():State
 		{
@@ -32,6 +42,7 @@ package EntityLib
 			//
 			
 			_currentState = _stateDictionary[currentStateName];
+			_currentStateDuration = 0;
 		}
 		
 		//
@@ -65,8 +76,19 @@ package EntityLib
 				return;
 			}
 			
+			var tempState:State = _currentState;
+			
 			_currentState.updateState(context);
 			_currentState = _currentState.getNextState(context);
+			
+			if (tempState != _currentState) 
+			{
+				_currentStateDuration = 0;
+			}
+			else 
+			{
+				_currentStateDuration++;
+			}
 		}
 	}
 

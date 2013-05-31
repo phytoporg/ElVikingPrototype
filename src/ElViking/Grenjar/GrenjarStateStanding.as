@@ -14,23 +14,30 @@ package ElViking.Grenjar
 	{
 		private var _toWalking:Boolean;
 		private var _toBlocking:Boolean;
+		private var _toSwinging:Boolean;
 		
 		override public function GrenjarStateStanding():void
 		{
 			_toWalking = false;
 			_toBlocking = false;
+			_toSwinging = false;
 		}
 		
 		override public function updateState(context:Object):void
 		{
 			_toWalking = false;
 			_toBlocking = false;
+			_toSwinging = false;
 			
 			var grenjar:Grenjar = context as Grenjar;
 			
 			if (FlxG.keys.Z == true) 
 			{
 				_toBlocking = true;
+			}
+			else if (FlxG.keys.X == true)
+			{
+				_toSwinging = true;
 			}
 			else if ((grenjar.velocity.x != 0) || (grenjar.velocity.y != 0))
 			{
@@ -49,6 +56,12 @@ package ElViking.Grenjar
 				grenjar.velocity.x = 0;
 				grenjar.velocity.y = 0;
 				returnState = stateMachine.getState(GrenjarState.BLOCKING);
+			}
+			else if (_toSwinging == true) 
+			{
+				grenjar.velocity.x = 0;
+				grenjar.velocity.y = 0;
+				returnState = stateMachine.getState(GrenjarState.SWINGING);
 			}
 			else if (_toWalking == true)
 			{
