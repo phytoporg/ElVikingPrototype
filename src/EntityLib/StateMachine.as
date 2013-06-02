@@ -1,6 +1,7 @@
 package EntityLib 
 {
 	import flash.utils.Dictionary;
+	import flash.utils.getTimer;
 	
 	/**
 	 * A state container which also drives the state machine forward.
@@ -10,7 +11,14 @@ package EntityLib
 	public class StateMachine 
 	{
 		//
-		// Duration measured in ticks (update calls).
+		// Timestamp for when we first transitioned
+		// into this state.
+		//
+		
+		protected var _currentStateBegin:int;
+		
+		//
+		// Duration measured in ms.
 		//
 		
 		protected var _currentStateDuration:int;
@@ -29,7 +37,8 @@ package EntityLib
 		
 		public function StateMachine(
 			currentStateName:String, 
-			initialStateDictionary:Dictionary):void
+			initialStateDictionary:Dictionary
+			):void
 		{
 			_stateDictionary = initialStateDictionary;
 			
@@ -43,6 +52,8 @@ package EntityLib
 			
 			_currentState = _stateDictionary[currentStateName];
 			_currentStateDuration = 0;
+			
+			_currentStateBegin = 0;
 		}
 		
 		//
@@ -84,10 +95,11 @@ package EntityLib
 			if (tempState != _currentState) 
 			{
 				_currentStateDuration = 0;
+				_currentStateBegin = getTimer();
 			}
 			else 
 			{
-				_currentStateDuration++;
+				_currentStateDuration = getTimer() - _currentStateBegin;
 			}
 		}
 	}

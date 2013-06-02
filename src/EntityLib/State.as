@@ -5,7 +5,7 @@ package EntityLib
 	 * @author Philjo
 	 */
 	public class State 
-	{
+	{	
 		//
 		// Updates the internal context of the state
 		//
@@ -24,5 +24,5 @@ package EntityLib
 			
 			return null;
 		}		
-}
 	}
+}

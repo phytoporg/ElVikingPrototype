@@ -15,15 +15,15 @@ package ElViking.Grenjar
 		// Duration is measured in ticks (update calls)
 		//
 		
-		private var _swingDuration:int;
-		public function get swingDuration():int
+		private var _swingDurationMs:int;
+		public function get swingDurationMs():int
 		{
-			return _swingDuration;
+			return _swingDurationMs;
 		}
 		
-		public function GrenjarStateSwinging(swingDuration:int)
+		public function GrenjarStateSwinging(swingDurationMs:int)
 		{
-			_swingDuration = swingDuration;
+			_swingDurationMs = swingDurationMs;
 			_toStanding = false;
 		}
 		
@@ -32,7 +32,7 @@ package ElViking.Grenjar
 			_toStanding = false;
 			
 			var grenjar:Grenjar = context as Grenjar;
-			if (grenjar.stateMachine.currentStateDuration >= _swingDuration) 
+			if (grenjar.stateMachine.currentStateDuration >= _swingDurationMs) 
 			{
 				_toStanding = true;
 			}
