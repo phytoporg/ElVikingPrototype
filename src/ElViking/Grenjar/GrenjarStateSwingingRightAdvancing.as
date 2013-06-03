@@ -45,6 +45,8 @@ package ElViking.Grenjar
 			}
 			else 
 			{
+				GrenjarStateUtils.handleInput(grenjar);
+				
 				_tempPoint = grenjar.direction;
 				_tempPoint.normalize(Grenjar.WALK_SPEED);
 				grenjar.velocity.x = _tempPoint.x;
@@ -72,7 +74,7 @@ package ElViking.Grenjar
 							-grenjar.direction.x 
 							 );
 							 
-			return grenjarAngle + Grenjar.SWING_BEGIN_ANGLE + 90;
+			return grenjarAngle - Grenjar.SWING_END_ANGLE - 90;
 		}
 		
 		override public function getInitialAngularVelocity():Number

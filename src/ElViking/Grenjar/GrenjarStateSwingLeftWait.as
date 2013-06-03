@@ -52,6 +52,7 @@ package ElViking.Grenjar
 			}
 			else if (_toWalking == true) 
 			{
+				GrenjarStateUtils.handleInput(grenjar);
 				returnState = grenjar.stateMachine.getState(GrenjarState.WALKING);
 			}
 			

@@ -20,11 +20,11 @@ package ElViking.Grenjar
 		public static const SPRITE_HEIGHT:int = 25;
 		public static const SPRITE_WIDTH:int  = 25;
 		
-		public static const SWING_BEGIN_ANGLE:Number       = 0;
-		public static const SWING_END_ANGLE:Number         = 135;
+		public static const SWING_BEGIN_ANGLE:Number       = 30;
+		public static const SWING_END_ANGLE:Number         = 100;
 		public static const SWING_RECOVERY_DURATION_MS:int = 10;
 		public static const SWING_WAIT_DURATION_MS:int     = 150;
-		public static const SWING_DURATION_MS:int          = 170;
+		public static const SWING_DURATION_MS:int          = 150;
 		
 		//
 		// Tracks the direction Grenjar is currently facing
