@@ -3,43 +3,25 @@ package ElViking.Grenjar
 	import EntityLib.State;
 	import EntityLib.StateMachine;
 	/**
-	 * The "Grenjar is swinging his hammer" state
+	 * The "Grenjar is swinging his hammer from right to left" state
 	 * 
 	 * @author Philjo
 	 */
 	public class GrenjarStateSwingingLeftStationary extends GrenjarSuperStateSwinging
 	{	
-		private var _toStanding:Boolean;
-		private var _toNextSwing:Boolean;
+		private var _toRecovery:Boolean = false;
 		
-		public function GrenjarStateSwingingLeftStationary()
-		{
-			_toStanding = false;
-			_toNextSwing = false;
-		}
-		
-		private var _pressedAttack:Boolean = false;
 		override public function updateState(context:Object):void
 		{
-			_toStanding = false;
-			_toNextSwing = false;
+			_toRecovery = false;
 			
 			var grenjar:Grenjar = context as Grenjar;
 			var timeOut:Boolean = 
 				grenjar.stateMachine.currentStateDuration >= 
-				Grenjar.GRENJAR_SWING_DURATION_MS;
-			if (timeOut && (_pressedAttack == false)) 
+				Grenjar.SWING_DURATION_MS;
+			if (timeOut == true) 
 			{
-				_toStanding = true;
-			}
-			else if (timeOut && (_pressedAttack == true))
-			{
-				_toNextSwing = true;
-			}
-			else if ((GrenjarStateUtils.grenjarAttackKey() == true) && 
-			         (grenjar.stateMachine.currentStateDuration >= 100)) 
-			{
-				_pressedAttack = true;
+				_toRecovery = true;
 			}
 		}
 		
@@ -49,24 +31,9 @@ package ElViking.Grenjar
 			var stateMachine:StateMachine = grenjar.stateMachine;
 			
 			var returnState:State = stateMachine.currentState;
-			if (_toStanding == true)
+			if (_toRecovery == true)
 			{
-				returnState = stateMachine.getState(GrenjarState.STANDING);
-			}
-			else if (_toNextSwing == true) 
-			{
-				returnState = stateMachine.getState(GrenjarState.SWINGING_RIGHT_ADVANCING);
-			}
-			
-			if (returnState != stateMachine.currentState) 
-			{
-				//
-				// Restore the default state for next transition here.
-				//
-				
-				_toStanding  = false;
-				_toNextSwing = false;
-				_pressedAttack = false;
+				returnState = stateMachine.getState(GrenjarState.SWINGING_LEFT_RECOVERY);
 			}
 			
 			return returnState;
@@ -95,7 +62,7 @@ package ElViking.Grenjar
 		
 		override public function getInitialAngularVelocity():Number
 		{
-			var swingDurationSeconds = Grenjar.GRENJAR_SWING_DURATION_MS / 1000.0;
+			var swingDurationSeconds:Number = Grenjar.SWING_DURATION_MS / 1000.0;
 			return -((Grenjar.SWING_END_ANGLE - Grenjar.SWING_BEGIN_ANGLE) / swingDurationSeconds);
 		}
 	}

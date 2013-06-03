@@ -16,13 +16,15 @@ package ElViking.Grenjar
 		// Constants 
 		//
 		
-		public static const WALK_SPEED:int = 150;
+		public static const WALK_SPEED:int    = 150;
 		public static const SPRITE_HEIGHT:int = 25;
 		public static const SPRITE_WIDTH:int  = 25;
 		
-		public static const SWING_BEGIN_ANGLE:Number = 0;
-		public static const SWING_END_ANGLE:Number = 135;
-		public static const GRENJAR_SWING_DURATION_MS:int = 170;
+		public static const SWING_BEGIN_ANGLE:Number       = 0;
+		public static const SWING_END_ANGLE:Number         = 135;
+		public static const SWING_RECOVERY_DURATION_MS:int = 10;
+		public static const SWING_WAIT_DURATION_MS:int     = 150;
+		public static const SWING_DURATION_MS:int          = 170;
 		
 		//
 		// Tracks the direction Grenjar is currently facing
@@ -67,6 +69,8 @@ package ElViking.Grenjar
 			stateDictionary[GrenjarState.BLOCKING] = new GrenjarStateBlocking();
 			stateDictionary[GrenjarState.SWINGING_LEFT_STATIONARY] = new GrenjarStateSwingingLeftStationary();
 			stateDictionary[GrenjarState.SWINGING_RIGHT_ADVANCING] = new GrenjarStateSwingingRightAdvancing();
+			stateDictionary[GrenjarState.SWINGING_LEFT_RECOVERY]   = new GrenjarStateSwingLeftRecovery();
+			stateDictionary[GrenjarState.SWINGING_LEFT_WAITING]    = new GrenjarStateSwingLeftWait();			
 			
 			_stateMachine = 
 				new StateMachine(

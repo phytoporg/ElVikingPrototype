@@ -3,6 +3,7 @@ package ElViking.Grenjar
 	import EntityLib.State;
 	import EntityLib.StateMachine;
 	import flash.geom.Point;
+	
 	/**
 	 * The state which represents Grenjar attacking from left-to-right while
 	 * advancing forward in the direction he's already facing.
@@ -23,7 +24,7 @@ package ElViking.Grenjar
 			_toStanding = false;
 			
 			var grenjar:Grenjar = context as Grenjar;
-			if (grenjar.stateMachine.currentStateDuration >= Grenjar.GRENJAR_SWING_DURATION_MS) 
+			if (grenjar.stateMachine.currentStateDuration >= Grenjar.SWING_DURATION_MS) 
 			{
 				_toStanding = true;
 			}
@@ -76,7 +77,7 @@ package ElViking.Grenjar
 		
 		override public function getInitialAngularVelocity():Number
 		{
-			var swingDurationSeconds = Grenjar.GRENJAR_SWING_DURATION_MS / 1000.0;
+			var swingDurationSeconds:Number = Grenjar.SWING_DURATION_MS / 1000.0;
 			return ((Grenjar.SWING_END_ANGLE - Grenjar.SWING_BEGIN_ANGLE) / swingDurationSeconds);
 		}		
 	}
