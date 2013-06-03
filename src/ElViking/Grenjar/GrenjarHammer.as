@@ -39,10 +39,8 @@ package ElViking.Grenjar
 		//
 		
 		private var _swingingLeftStationaryState:State;
-		private var _fullSwingingLeftStationaryState:GrenjarStateSwingingLeftStationary;
-		
 		private var _swingingRightAdvancingState:State;
-		private var _fullSwingingRightAdvancingState:GrenjarStateSwingingRightAdvancing;
+		private var _swingingLeftAdvancingState:State;
 		
 		//
 		// Tracks the current rotation angle across update cycles.
@@ -71,10 +69,8 @@ package ElViking.Grenjar
 			_currentRotationAngle = 0;
 			
 			_swingingLeftStationaryState = _grenjar.stateMachine.getState(GrenjarState.SWINGING_LEFT_STATIONARY);
-			_fullSwingingLeftStationaryState = _swingingLeftStationaryState as GrenjarStateSwingingLeftStationary;
-		
+			_swingingLeftAdvancingState  = _grenjar.stateMachine.getState(GrenjarState.SWINGING_LEFT_ADVANCING);			
 			_swingingRightAdvancingState = _grenjar.stateMachine.getState(GrenjarState.SWINGING_RIGHT_ADVANCING);
-			_fullSwingingRightAdvancingState = _swingingRightAdvancingState as GrenjarStateSwingingRightAdvancing;
 		}
 	
 		private function swingingUpdate():void
@@ -92,7 +88,8 @@ package ElViking.Grenjar
 		private function isSwingingState(state:State):Boolean
 		{
 			return (state == _swingingLeftStationaryState) ||
-			       (state == _fullSwingingRightAdvancingState);
+			       (state == _swingingRightAdvancingState) ||
+				   (state == _swingingLeftAdvancingState);
 		}
 		
 		private function getInitialAngle(state:State):Number

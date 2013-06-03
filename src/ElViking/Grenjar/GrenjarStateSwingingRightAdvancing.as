@@ -12,21 +12,16 @@ package ElViking.Grenjar
 	 */
 	public class GrenjarStateSwingingRightAdvancing extends GrenjarSuperStateSwinging
 	{
-		private var _toStanding:Boolean;
-		
-		public function GrenjarStateSwingingRightAdvancing() 
-		{
-			_toStanding = false;
-		}
+		private var _toRecovery:Boolean = false;
 
 		override public function updateState(context:Object):void
 		{
-			_toStanding = false;
+			_toRecovery = false;
 			
 			var grenjar:Grenjar = context as Grenjar;
 			if (grenjar.stateMachine.currentStateDuration >= Grenjar.SWING_DURATION_MS) 
 			{
-				_toStanding = true;
+				_toRecovery = true;
 			}
 		}
 				
@@ -37,11 +32,11 @@ package ElViking.Grenjar
 			var stateMachine:StateMachine = grenjar.stateMachine;
 			
 			var returnState:State = stateMachine.currentState;
-			if (_toStanding == true) 
+			if (_toRecovery == true) 
 			{
 				grenjar.velocity.x = 0;
 				grenjar.velocity.y = 0;
-				returnState = stateMachine.getState(GrenjarState.STANDING);
+				returnState = stateMachine.getState(GrenjarState.SWINGING_RIGHT_RECOVERY);
 			}
 			else 
 			{

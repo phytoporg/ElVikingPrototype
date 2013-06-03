@@ -2,38 +2,48 @@ package ElViking.Grenjar
 {
 	import EntityLib.State;
 	import EntityLib.StateMachine;
+	import flash.geom.Point;
+	
 	/**
-	 * The "Grenjar is swinging his hammer from right to left" state
-	 * 
+	 * ...
 	 * @author Philjo
 	 */
-	public class GrenjarStateSwingingLeftStationary extends GrenjarSuperStateSwinging
-	{	
+	public class GrenjarStateSwingingLeftAdvancing extends GrenjarSuperStateSwinging
+	{
 		private var _toRecovery:Boolean = false;
-		
+
 		override public function updateState(context:Object):void
 		{
 			_toRecovery = false;
 			
 			var grenjar:Grenjar = context as Grenjar;
-			var timeOut:Boolean = 
-				grenjar.stateMachine.currentStateDuration >= 
-				Grenjar.SWING_DURATION_MS;
-			if (timeOut == true) 
+			if (grenjar.stateMachine.currentStateDuration >= Grenjar.SWING_DURATION_MS) 
 			{
 				_toRecovery = true;
 			}
 		}
-		
+				
+		private var _tempPoint:Point = new Point();
 		override public function getNextState(context:Object):State
 		{
 			var grenjar:Grenjar = context as Grenjar;
 			var stateMachine:StateMachine = grenjar.stateMachine;
 			
 			var returnState:State = stateMachine.currentState;
-			if (_toRecovery == true)
+			if (_toRecovery == true) 
 			{
+				grenjar.velocity.x = 0;
+				grenjar.velocity.y = 0;
 				returnState = stateMachine.getState(GrenjarState.SWINGING_LEFT_RECOVERY);
+			}
+			else 
+			{
+				GrenjarStateUtils.handleInput(grenjar);
+				
+				_tempPoint = grenjar.direction;
+				_tempPoint.normalize(Grenjar.WALK_SPEED);
+				grenjar.velocity.x = _tempPoint.x;
+				grenjar.velocity.y = _tempPoint.y;
 			}
 			
 			return returnState;
@@ -57,13 +67,13 @@ package ElViking.Grenjar
 							-grenjar.direction.x 
 							 );
 							 
-			return grenjarAngle - Grenjar.SWING_BEGIN_ANGLE - 90; 
+			return grenjarAngle - Grenjar.SWING_BEGIN_ANGLE - 90;
 		}
 		
 		override public function getInitialAngularVelocity():Number
 		{
 			var swingDurationSeconds:Number = Grenjar.SWING_DURATION_MS / 1000.0;
 			return ((Grenjar.SWING_BEGIN_ANGLE - Grenjar.SWING_END_ANGLE) / swingDurationSeconds);
-		}
+		}			
 	}
 }

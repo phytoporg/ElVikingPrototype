@@ -68,9 +68,12 @@ package ElViking.Grenjar
 			stateDictionary[GrenjarState.STANDING] = new GrenjarStateStanding();
 			stateDictionary[GrenjarState.BLOCKING] = new GrenjarStateBlocking();
 			stateDictionary[GrenjarState.SWINGING_LEFT_STATIONARY] = new GrenjarStateSwingingLeftStationary();
+			stateDictionary[GrenjarState.SWINGING_LEFT_ADVANCING]  = new GrenjarStateSwingingLeftAdvancing();			
 			stateDictionary[GrenjarState.SWINGING_RIGHT_ADVANCING] = new GrenjarStateSwingingRightAdvancing();
 			stateDictionary[GrenjarState.SWINGING_LEFT_RECOVERY]   = new GrenjarStateSwingLeftRecovery();
-			stateDictionary[GrenjarState.SWINGING_LEFT_WAITING]    = new GrenjarStateSwingLeftWait();			
+			stateDictionary[GrenjarState.SWINGING_LEFT_WAITING]    = new GrenjarStateSwingLeftWait();	
+			stateDictionary[GrenjarState.SWINGING_RIGHT_RECOVERY]  = new GrenjarStateSwingRightRecovery();
+			stateDictionary[GrenjarState.SWINGING_RIGHT_WAITING]   = new GrenjarStateSwingRightWait();				
 			
 			_stateMachine = 
 				new StateMachine(
