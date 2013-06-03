@@ -17,6 +17,7 @@ package ElViking.Grenjar
 		//
 		
 		public static const WALK_SPEED:int    = 150;
+		public static const LUNGE_SPEED:int   = 300;
 		public static const SPRITE_HEIGHT:int = 25;
 		public static const SPRITE_WIDTH:int  = 25;
 		

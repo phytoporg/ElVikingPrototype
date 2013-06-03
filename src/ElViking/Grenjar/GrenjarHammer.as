@@ -11,12 +11,9 @@ package ElViking.Grenjar
 	 */
 	public class GrenjarHammer extends FlxSprite
 	{
-		private const SPRITE_WIDTH:int  = 25;
-		private const SPRITE_HEIGHT:int = 20;
-		private const HAMMER_SWING_RADIUS:int = 35;
-		
-		private const SWING_BEGIN_ANGLE:Number = 0;
-		private const SWING_END_ANGLE:Number = 135; 
+		private const SPRITE_WIDTH:int  = 20;
+		private const SPRITE_HEIGHT:int = 15;
+		private const HAMMER_SWING_RADIUS:int = 35; 
 		
 		//
 		// Parent object transform management.

@@ -42,8 +42,10 @@ package ElViking.Grenjar
 			{
 				GrenjarStateUtils.handleInput(grenjar);
 				
-				_tempPoint = grenjar.direction;
-				_tempPoint.normalize(Grenjar.WALK_SPEED);
+				_tempPoint.x = grenjar.direction.x;
+				_tempPoint.y = grenjar.direction.y;
+				_tempPoint.normalize(Grenjar.LUNGE_SPEED);
+				
 				grenjar.velocity.x = _tempPoint.x;
 				grenjar.velocity.y = _tempPoint.y;
 			}
