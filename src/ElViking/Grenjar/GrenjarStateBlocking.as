@@ -28,13 +28,13 @@ package ElViking.Grenjar
 			
 			var grenjar:Grenjar = context as Grenjar;
 			
-			if ((FlxG.keys.Z == false) && 
-			    ((grenjar.velocity.x == 0) && (grenjar.velocity.y == 0)))
+			if ((GrenjarStateUtils.grenjarBlockKey() == false) && 
+			    (GrenjarStateUtils.grenjarMoveKey() == false))
 			{
 				_toStanding = true;
 			}
 			else if ((FlxG.keys.Z == false) &&
-			         ((grenjar.velocity.x != 0) || (grenjar.velocity.y != 0)))
+			         (GrenjarStateUtils.grenjarMoveKey() == true))
 			{
 				_toWalking = true;
 			}
@@ -56,6 +56,7 @@ package ElViking.Grenjar
 			}
 			else 
 			{
+				GrenjarStateUtils.handleInput(grenjar);
 				grenjar.velocity.x = 0;
 				grenjar.velocity.y = 0;
 			}

@@ -33,6 +33,16 @@ package ElViking.Grenjar
 		//
 		
 		private var _tempOffset:Point;
+			
+		//
+		// Cached states.
+		//
+		
+		private var _swingingLeftStationaryState:State;
+		private var _fullSwingingLeftStationaryState:GrenjarStateSwingingLeftStationary;
+		
+		private var _swingingRightAdvancingState:State;
+		private var _fullSwingingRightAdvancingState:GrenjarStateSwingingRightAdvancing;
 		
 		//
 		// Tracks the current rotation angle across update cycles.
@@ -59,6 +69,12 @@ package ElViking.Grenjar
 			_grenjar = grenjar;
 			_grenjarPrevState = grenjar.stateMachine.currentState;
 			_currentRotationAngle = 0;
+			
+			_swingingLeftStationaryState = _grenjar.stateMachine.getState(GrenjarState.SWINGING_LEFT_STATIONARY);
+			_fullSwingingLeftStationaryState = _swingingLeftStationaryState as GrenjarStateSwingingLeftStationary;
+		
+			_swingingRightAdvancingState = _grenjar.stateMachine.getState(GrenjarState.SWINGING_RIGHT_ADVANCING);
+			_fullSwingingRightAdvancingState = _swingingRightAdvancingState as GrenjarStateSwingingRightAdvancing;
 		}
 	
 		private function swingingUpdate():void
@@ -72,14 +88,32 @@ package ElViking.Grenjar
 			_tempOffset.x = HAMMER_SWING_RADIUS * Math.cos(-angle * degToRad);
 			_tempOffset.y = -HAMMER_SWING_RADIUS * Math.sin(-angle * degToRad);
 		}
-	
+		
+		private function isSwingingState(state:State):Boolean
+		{
+			return (state == _swingingLeftStationaryState) ||
+			       (state == _fullSwingingRightAdvancingState);
+		}
+		
+		private function getInitialAngle(state:State):Number
+		{
+			var swingingState:GrenjarSuperStateSwinging = state as GrenjarSuperStateSwinging;
+			return swingingState.getInitialAngle(_grenjar);
+		}
+		
+		private function getInitialAngularVelocity(state:State):Number
+		{
+			var swingingState:GrenjarSuperStateSwinging = state as GrenjarSuperStateSwinging;			
+			return swingingState.getInitialAngularVelocity();
+		}
+		
 		override public function update():void
 		{
 			_localPosition.x = (_grenjar.x + _grenjar.width / 2) - (width / 2);
 			_localPosition.y = (_grenjar.y + _grenjar.height / 2) - (height / 2);
 		
 			var grenjarState:State = _grenjar.stateMachine.currentState;
-			var swingingState:State = _grenjar.stateMachine.getState(GrenjarState.SWINGING);
+			var swingingState:State = _grenjar.stateMachine.getState(GrenjarState.SWINGING_LEFT_STATIONARY);
 			
 			//
 			// If there's a state transition from non-swinging to swinging, set up the
@@ -87,44 +121,13 @@ package ElViking.Grenjar
 			//
 			
 			if ((_grenjarPrevState != grenjarState) && 
-			    (grenjarState == swingingState)) 
-			{
-				var degToRad:Number = (Math.PI) / 180;
-				var radToDeg:Number = 1 / degToRad;
-				var grenjarAngle:Number = 
-					radToDeg * Math.atan2(
-								//
-								// Negate y-axis because screen coordinates lol
-								//
-								 -_grenjar.direction.y,
-								 
-								//
-								// Don't know why I needed to negate this, ugh. This
-								// all needs some serious refactoring.
-								//
-								-_grenjar.direction.x 
-								 );
-								 
-				//
-				// Subtract 90 because we're interested in a rotation
-				// angle offset to the right of the direction grenjar
-				// is facing by 90 degrees.
-				//
-				
-				angle = (grenjarAngle - SWING_BEGIN_ANGLE - 90); 
-				
-				//
-				// Not sure what's going on, but the rotation seems to be clockwise by
-				// default, which is definitely counterintuitive. Will have to investigate
-				// later, since I've wasted enough time on that. D: Negate the angular
-				// velocity here and account for the negative angle in updateSwinging().
-				//
-				var qualifiedSwingState:GrenjarStateSwinging = swingingState as GrenjarStateSwinging;
-				var swingDurationSeconds:Number = (qualifiedSwingState.swingDurationMs / 1000.0);
-				angularVelocity = -((SWING_END_ANGLE - SWING_BEGIN_ANGLE) / swingDurationSeconds);
+			    (isSwingingState(grenjarState) == true))
+			{		 
+				angle = getInitialAngle(grenjarState);
+				angularVelocity = getInitialAngularVelocity(grenjarState);
 			}
 			
-			if (grenjarState == swingingState) 
+			if (isSwingingState(grenjarState) == true) 
 			{
 				visible = true;
 				swingingUpdate();

@@ -16,11 +16,13 @@ package ElViking.Grenjar
 		// Constants 
 		//
 		
-		private const WALK_SPEED:int = 150;
-		private const SPRITE_HEIGHT:int = 25;
-		private const SPRITE_WIDTH:int  = 25;
+		public static const WALK_SPEED:int = 150;
+		public static const SPRITE_HEIGHT:int = 25;
+		public static const SPRITE_WIDTH:int  = 25;
 		
-		private const GRENJAR_SWING_DURATION_MS:int = 170;
+		public static const SWING_BEGIN_ANGLE:Number = 0;
+		public static const SWING_END_ANGLE:Number = 135;
+		public static const GRENJAR_SWING_DURATION_MS:int = 170;
 		
 		//
 		// Tracks the direction Grenjar is currently facing
@@ -63,7 +65,8 @@ package ElViking.Grenjar
 			stateDictionary[GrenjarState.WALKING]  = new GrenjarStateWalking();
 			stateDictionary[GrenjarState.STANDING] = new GrenjarStateStanding();
 			stateDictionary[GrenjarState.BLOCKING] = new GrenjarStateBlocking();
-			stateDictionary[GrenjarState.SWINGING] = new GrenjarStateSwinging(GRENJAR_SWING_DURATION_MS);
+			stateDictionary[GrenjarState.SWINGING_LEFT_STATIONARY] = new GrenjarStateSwingingLeftStationary();
+			stateDictionary[GrenjarState.SWINGING_RIGHT_ADVANCING] = new GrenjarStateSwingingRightAdvancing();
 			
 			_stateMachine = 
 				new StateMachine(
@@ -86,60 +89,12 @@ package ElViking.Grenjar
 			return value;
 		}
 		
-		private function handleInput():void
+		private function updateState():void
 		{	
-			velocity.x = 0.0;
-			velocity.y = 0.0;		
-			
-			if (FlxG.keys.LEFT)
-			{
-				velocity.x = -WALK_SPEED;
-				_direction.x = -1.0;
-			}
-			else if (FlxG.keys.RIGHT)
-			{
-				velocity.x = WALK_SPEED;
-				_direction.x = 1.0;
-			}
-			else if (FlxG.keys.UP || FlxG.keys.DOWN)
-			{
-				//
-				// Persist the x component of the direction unless we're moving
-				// along the y-axis.
-				//
-				
-				_direction.x = 0.0;
-			}
-			
-			if (FlxG.keys.UP)
-			{
-				velocity.y = -WALK_SPEED;
-				_direction.y = -1.0;
-			} 
-			else if (FlxG.keys.DOWN)
-			{
-				velocity.y = WALK_SPEED;
-				_direction.y = 1.0;
-			}
-			else if (FlxG.keys.LEFT || FlxG.keys.RIGHT)
-			{
-				//
-				// Persist the y component of the direction unless we're moving along
-				// the x-axis.
-				//
-				
-				_direction.y = 0.0;
-			}
+			_stateMachine.update(this);
 			
 			x = BoundValue(x, 0, FlxG.width - width);
 			y = BoundValue(y, 0, FlxG.height - height);
-		}
-		
-		private function updateState():void
-		{	
-			handleInput();
-			
-			_stateMachine.update(this);
 		}
 				
 		override public function update():void

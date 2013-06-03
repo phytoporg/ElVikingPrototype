@@ -30,11 +30,15 @@ package ElViking.Grenjar
 			
 			var grenjar:Grenjar = context as Grenjar;
 			
-			if (FlxG.keys.Z == true)
+			if (GrenjarStateUtils.grenjarBlockKey() == true)
 			{
 				_toBlocking = true;
 			}
-			else if ((grenjar.velocity.x == 0) && (grenjar.velocity.y == 0))
+			if (GrenjarStateUtils.grenjarAttackKey() == true) 
+			{
+				_toSwinging = true;
+			}
+			else if (GrenjarStateUtils.grenjarMoveKey() == false)
 			{
 				_toStanding = true;
 			}
@@ -45,10 +49,18 @@ package ElViking.Grenjar
 			var grenjar:Grenjar = context as Grenjar;
 			var stateMachine:StateMachine = grenjar.stateMachine;
 			
+			GrenjarStateUtils.handleInput(grenjar);
+			
 			var returnState:State = stateMachine.currentState;
 			if (_toStanding == true) 
 			{
 				returnState = stateMachine.getState(GrenjarState.STANDING);
+			}
+			else if (_toSwinging == true) 
+			{
+				returnState = stateMachine.getState(GrenjarState.SWINGING_LEFT_STATIONARY);
+				grenjar.velocity.x = 0;
+				grenjar.velocity.y = 0;
 			}
 			else if (_toBlocking == true)
 			{

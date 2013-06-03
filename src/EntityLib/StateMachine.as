@@ -3,6 +3,8 @@ package EntityLib
 	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
 	
+	import flash.utils.getQualifiedClassName;
+	
 	/**
 	 * A state container which also drives the state machine forward.
 	 * 
@@ -96,6 +98,8 @@ package EntityLib
 			{
 				_currentStateDuration = 0;
 				_currentStateBegin = getTimer();
+				
+				trace(getQualifiedClassName(_currentState));
 			}
 			else 
 			{

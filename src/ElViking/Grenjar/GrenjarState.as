@@ -14,6 +14,7 @@ package ElViking.Grenjar
 		public static const STANDING:String = "STATE_STANDING";
 		public static const WALKING:String  = "STATE_WALKING";
 		public static const BLOCKING:String = "STATE_BLOCKING";
-		public static const SWINGING:String = "STATE_SWINGING";
+		public static const SWINGING_LEFT_STATIONARY:String = "STATE_SWINGING_LEFT_STATIONARY";
+		public static const SWINGING_RIGHT_ADVANCING:String = "STATE_SWINGING_RIGHT_ADVANCING";
 	}
 }
