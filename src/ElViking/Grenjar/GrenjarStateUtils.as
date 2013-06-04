@@ -31,6 +31,11 @@ package ElViking.Grenjar
 			return FlxG.keys.X;
 		}
 		
+		public static function grenjarLeapKey():Boolean
+		{
+			return FlxG.keys.C;
+		}
+		
 		public static function handleInput(grenjar:Grenjar):void
 		{	
 			grenjar.velocity.x = 0.0;

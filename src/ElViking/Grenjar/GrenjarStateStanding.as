@@ -12,22 +12,17 @@ package ElViking.Grenjar
 	
 	internal class GrenjarStateStanding extends State
 	{
-		private var _toWalking:Boolean;
-		private var _toBlocking:Boolean;
-		private var _toSwinging:Boolean;
-		
-		override public function GrenjarStateStanding():void
-		{
-			_toWalking = false;
-			_toBlocking = false;
-			_toSwinging = false;
-		}
+		private var _toWalking:Boolean  = false;
+		private var _toBlocking:Boolean = false;
+		private var _toSwinging:Boolean = false;
+		private var _toLeaping:Boolean  = false;
 		
 		override public function updateState(context:Object):void
 		{
-			_toWalking = false;
+			_toWalking  = false;
 			_toBlocking = false;
 			_toSwinging = false;
+			_toLeaping  = false;
 			
 			var grenjar:Grenjar = context as Grenjar;
 			
@@ -42,6 +37,10 @@ package ElViking.Grenjar
 			else if (GrenjarStateUtils.grenjarMoveKey() == true)
 			{
 				_toWalking = true;
+			}
+			else if (GrenjarStateUtils.grenjarLeapKey() == true) 
+			{
+				_toLeaping = true;
 			}
 		}
 		
@@ -66,6 +65,10 @@ package ElViking.Grenjar
 			else if (_toWalking == true)
 			{
 				returnState = stateMachine.getState(GrenjarState.WALKING);
+			}
+			else if (_toLeaping == true) 
+			{
+				returnState = stateMachine.getState(GrenjarState.STARTING_LEAP);
 			}
 			
 			return returnState;
