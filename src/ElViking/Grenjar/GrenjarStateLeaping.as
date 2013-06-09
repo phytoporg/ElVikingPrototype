@@ -9,19 +9,16 @@ package ElViking.Grenjar
 	 */
 	public class GrenjarStateLeaping extends State
 	{
-		//
-		// TODO: ToLeapRecovery rather than to standing!
-		//
-		
-		private var _toStanding:Boolean = false;
+
+		private var _toRecovery:Boolean = false;
 		override public function updateState(context:Object):void
 		{
-			_toStanding = false;
+			_toRecovery = false;
 			
 			var grenjar:Grenjar = context as Grenjar;
 			if (grenjar.stateMachine.currentStateDuration >= Grenjar.LEAP_DURATION_MS) 
 			{
-				_toStanding = true;
+				_toRecovery = true;
 			}
 		}
 		
@@ -44,21 +41,21 @@ package ElViking.Grenjar
 			var grenjar:Grenjar = context as Grenjar;
 			var returnState:State = grenjar.stateMachine.currentState;
 			
-			if (_toStanding == true) 
+			if (_toRecovery == true) 
 			{
 				grenjar.scale.x = 1.0;
 				grenjar.scale.y = 1.0;
 				
 				grenjar.velocity.x = 0.0;
 				grenjar.velocity.y = 0.0;
-				returnState = grenjar.stateMachine.getState(GrenjarState.STANDING);
+				returnState = grenjar.stateMachine.getState(GrenjarState.LEAP_RECOVERY);
 			}
 			else 
 			{
 				updateGrenjarLeapScale(grenjar);
 				_tempPoint.x = grenjar.direction.x;
 				_tempPoint.y = grenjar.direction.y;
-				_tempPoint.normalize(Grenjar.LUNGE_SPEED);
+				_tempPoint.normalize(Grenjar.LEAP_SPEED);
 				
 				grenjar.velocity.x = _tempPoint.x;
 				grenjar.velocity.y = _tempPoint.y;

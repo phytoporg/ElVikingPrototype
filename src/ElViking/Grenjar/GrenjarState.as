@@ -23,5 +23,6 @@ package ElViking.Grenjar
 		public static const SWINGING_RIGHT_WAITING:String   = "STATE_SWINGING_RIGHT_WAITING";
 		public static const STARTING_LEAP:String            = "STATE_STARTING_LEAP";
 		public static const LEAPING:String                  = "STATE_LEAPING";
+		public static const LEAP_RECOVERY:String            = "STATE_LEAP_RECOVERY";
 	}
 }

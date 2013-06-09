@@ -30,6 +30,8 @@ package ElViking.Grenjar
 		public static const LEAP_START_DURATION_MS:int     = 20;
 		public static const LEAP_DURATION_MS:int           = 120;
 		public static const LEAP_SCALE_MAX:Number          = 1.5;
+		public static const LEAP_SPEED:Number              = 900;
+		public static const LEAP_RECOVERY_MS:int           = 50;
 		
 		//
 		// Tracks the direction Grenjar is currently facing
@@ -80,7 +82,8 @@ package ElViking.Grenjar
 			stateDictionary[GrenjarState.SWINGING_RIGHT_RECOVERY]  = new GrenjarStateSwingRightRecovery();
 			stateDictionary[GrenjarState.SWINGING_RIGHT_WAITING]   = new GrenjarStateSwingRightWait();
 			stateDictionary[GrenjarState.STARTING_LEAP]            = new GrenjarStateStartingLeap();
-			stateDictionary[GrenjarState.LEAPING]                  = new GrenjarStateLeaping();					
+			stateDictionary[GrenjarState.LEAPING]                  = new GrenjarStateLeaping();
+			stateDictionary[GrenjarState.LEAP_RECOVERY]            = new GrenjarStateLeapRecovery();
 			
 			_stateMachine = 
 				new StateMachine(
