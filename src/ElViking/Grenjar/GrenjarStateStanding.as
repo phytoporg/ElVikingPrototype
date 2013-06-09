@@ -34,13 +34,13 @@ package ElViking.Grenjar
 			{
 				_toSwinging = true;
 			}
-			else if (GrenjarStateUtils.grenjarMoveKey() == true)
-			{
-				_toWalking = true;
-			}
 			else if (GrenjarStateUtils.grenjarLeapKey() == true) 
 			{
 				_toLeaping = true;
+			}
+			else if (GrenjarStateUtils.grenjarMoveKey() == true)
+			{
+				_toWalking = true;
 			}
 		}
 		
