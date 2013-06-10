@@ -19,5 +19,4 @@ package
 			super(320, 240, GameState, 2);
 		}
 	}
-
 }
