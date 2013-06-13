@@ -10,8 +10,22 @@ package ElViking.Grenjar
 	public class GrenjarGroup extends FlxGroup
 	{
 		private var _body:Grenjar;
+		public function get body():Grenjar
+		{
+			return _body;
+		}
+		
 		private var _shield:GrenjarShield;
+		public function shield():GrenjarShield
+		{
+			return _shield;
+		}
+		
 		private var _wepon:GrenjarHammer;
+		public function wepon():GrenjarHammer
+		{
+			return _wepon;
+		}
 		
 		public function GrenjarGroup()
 		{

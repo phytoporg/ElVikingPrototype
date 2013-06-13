@@ -92,26 +92,9 @@ package ElViking.Grenjar
 					);
 		}
 		
-		private function BoundValue(value:Number, lowerBound:Number, upperBound:Number):Number
-		{			
-			if (value < lowerBound)
-			{
-				return lowerBound;
-			}
-			else if (value > upperBound)
-			{
-				return upperBound;
-			}
-			
-			return value;
-		}
-		
 		private function updateState():void
 		{	
 			_stateMachine.update(this);
-			
-			x = BoundValue(x, 0, FlxG.width - width);
-			y = BoundValue(y, 0, FlxG.height - height);
 		}
 				
 		override public function update():void
